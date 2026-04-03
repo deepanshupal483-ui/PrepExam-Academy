@@ -1,1 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PrepExam Academy | Master Your Path</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0a0f2c;
+    --deep: #111740;
+    --gold: #f5c842;
+    --amber: #e8a020;
+    --cream: #fdf6e3;
+    --muted: #8891b4;
+    --card: #161d42;
+    --border: rgba(245,200,66,0.18);
+    --radius: 14px;
+  }
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 6vw;
+    background: rgba(10,15,44,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--cream); }
+  nav ul { list-style: none; display: flex; gap: 1.5rem; }
+  nav ul a {
+    text-decoration: none; color: var(--muted);
+    font-size: 0.9rem; font-weight: 500;
+    transition: color .25s;
+  }
+  nav ul a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold); color: var(--navy);
+    padding: 9px 22px; border-radius: 50px;
+    font-weight: 600; font-size: 0.88rem;
+    text-decoration: none;
+    transition: background .25s, transform .2s;
+  }
+  .nav-cta:hover { background: var(--amber); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 90vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 6vw 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 20%, rgba(245,200,66,0.10) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(17,23,64,0.8) 0%, transparent 70%);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900; line-height: 1.07;
+    color: var(--cream);
+    max-width: 900px;
+    animation: fadeUp .8s .1s ease both;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero p {
+    margin-top: 22px;
+    font-size: 1.1rem; color: var(--muted);
+    max-width: 600px; line-height: 1.7;
+    animation: fadeUp .8s .2s ease both;
+  }
+
+  /* ── GLOBAL FILTER MENU ── */
+  .global-filter {
+    background: var(--deep);
+    padding: 40px 6vw;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 10;
+  }
+  .global-filter h2 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    margin-bottom: 24px;
+    font-size: 1.8rem;
+  }
+  .exam-tabs {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    max-width: 1000px; margin: 0 auto;
+  }
+  .tab-btn {
+    padding: 12px 22px; border-radius: 50px; border: 1.5px solid var(--border);
+    background: var(--card); color: var(--muted); font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all .2s;
+  }
+  .tab-btn.active, .tab-btn:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 6vw; }
+  .section-tag {
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    font-weight: 900; line-height: 1.15; color: var(--cream);
+  }
+  .section-sub {
+    margin-top: 14px; color: var(--muted);
+    font-size: 1rem; line-height: 1.7; max-width: 540px; margin-bottom: 40px;
+  }
+
+  /* ── GRIDS ── */
+  .grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;
+  }
+  .content-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: transform .25s, box-shadow .25s, opacity 0.3s ease;
+  }
+  .content-card:hover { transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,0.35); }
+  
+  .mat-type { font-size: 0.72rem; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--amber); }
+  .mat-title { font-weight: 700; font-size: 1.1rem; color: var(--cream); line-height: 1.4; }
+  .mat-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .mat-meta { display: flex; gap: 16px; font-size: 0.78rem; color: var(--muted); margin-top: auto; padding-top: 10px;}
+  .mat-link {
+    margin-top: 14px; display: inline-flex; align-items: center; gap: 8px;
+    color: var(--gold); font-weight: 600; font-size: 0.88rem;
+    text-decoration: none; cursor: pointer; transition: gap .2s; border: none; background: none; padding: 0;
+  }
+  .mat-link:hover { gap: 12px; }
+  .mat-link svg { width: 16px; height: 16px; }
+
+  /* ── VIDEO SPECIFIC ── */
+  .videos { background: var(--deep); }
+  .video-card { padding: 0; overflow: hidden; }
+  .video-thumb {
+    position: relative; background: linear-gradient(135deg, #1a2248, #0d1230);
+    height: 180px; display: flex; align-items: center; justify-content: center;
+  }
+  .video-thumb .thumb-icon { font-size: 3.5rem; opacity: 0.2; position: absolute; right: 20px; bottom: 10px; }
+  .play-btn {
+    width: 60px; height: 60px; background: var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    transition: transform .2s, background .2s; z-index: 2; text-decoration: none;
+  }
+  .play-btn:hover { transform: scale(1.1); background: var(--amber); }
+  .video-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1;}
+  .video-tag { font-size: 0.72rem; font-weight: 700; color: var(--amber); letter-spacing: 1.5px; text-transform: uppercase; }
+  .video-title { font-weight: 700; font-size: 1rem; color: var(--cream); margin-top: 8px; line-height: 1.45; }
+  .video-link-btn {
+    display: block; text-align: center; margin-top: auto; padding: 12px;
+    border: 1.5px solid var(--border); border-radius: 8px; background: transparent;
+    color: var(--gold); font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: all .2s;
+  }
+  .video-link-btn:hover { background: rgba(245,200,66,0.08); border-color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 60px 6vw 30px; border-top: 1px solid var(--border); background: var(--deep);
+    display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between;
+  }
+  .footer-brand .logo { font-size: 1.3rem; }
+  .footer-brand p { margin-top: 10px; font-size: 0.85rem; color: var(--muted); max-width: 280px; line-height: 1.65; }
+  .footer-col h4 { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { text-decoration: none; color: var(--muted); font-size: 0.88rem; transition: color .2s; }
+  .footer-col ul a:hover { color: var(--cream); }
+  .footer-bottom { text-align: center; padding: 20px 6vw; font-size: 0.78rem; color: var(--muted); background: var(--deep); border-top: 1px solid var(--border); }
+
+  /* ── SCROLL TOP ── */
+  .scroll-top {
+    position: fixed; bottom: 28px; right: 28px; width: 46px; height: 46px;
+    background: var(--gold); color: var(--navy); border: none; border-radius: 50%;
+    font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(245,200,66,0.3); transition: transform .2s; z-index: 99;
+  }
+  .scroll-top:hover { transform: translateY(-3px); }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    display: none; grid-column: 1 / -1; text-align: center; padding: 40px;
+    background: rgba(255,255,255,0.02); border-radius: var(--radius); border: 1px dashed var(--border);
+  }
+  .empty-state p { color: var(--muted); font-size: 1.1rem; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  
+  @media(max-width: 900px) { nav ul { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Prep<span>Exam</span> Academy</div>
+  <ul>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#material">Study Material</a></li>
+    <li><a href="#pyq">Previous Papers</a></li>
+    <li><a href="#videos">Lectures</a></li>
+    <li><a href="#blogs">Tech Blogs</a></li>
+  </ul>
+  <a href="#dashboard" class="nav-cta">Choose Path</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🚀 Personalized Learning Ecosystem</div>
+  <h1>Your Blueprint for <em>Career Success</em></h1>
+  <p>Select your target path below. We instantly filter the world's best study material, previous year papers, and video lectures to match your exact goals.</p>
+</div>
+
+<section class="global-filter" id="dashboard">
+  <h2>Select Your Target Path</h2>
+  <div class="exam-tabs">
+    <button class="tab-btn active" onclick="filterEcosystem('all', this)">🌐 All Content</button>
+    <button class="tab-btn" onclick="filterEcosystem('placement', this)">💻 Software Engineering & FAANG</button>
+    <button class="tab-btn" onclick="filterEcosystem('networking', this)">🔌 IT & Cisco Certifications</button>
+    <button class="tab-btn" onclick="filterEcosystem('gate', this)">🛤️ GATE (CS/IT)</button>
+    <button class="tab-btn" onclick="filterEcosystem('upsc', this)">🏛️ Civil Services (UPSC)</button>
+    <button class="tab-btn" onclick="filterEcosystem('jeeneet', this)">🩺 Medical & Eng. (JEE/NEET)</button>
+    <button class="tab-btn" onclick="filterEcosystem('management', this)">📊 Management (CAT/GMAT)</button>
+    <button class="tab-btn" onclick="filterEcosystem('banking', this)">🏦 Govt Exams (SSC/Banking)</button>
+  </div>
+</section>
+
+<section id="material">
+  <div class="section-tag">📄 Resources</div>
+  <div class="section-title">Core Study Material</div>
+  <div class="section-sub">Download notes, cheatsheets, and concepts curated by top engineers and educators.</div>
+  
+  <div class="grid-layout" id="material-grid">
+    <div class="content-card mat-card filterable" data-exam="placement gate">
+      <div class="mat-type">📝 Concept Notes</div>
+      <div class="mat-title">Data Structures & Algorithms in Python</div>
+      <div class="mat-desc">Complete reference covering arrays, linked lists, sorting algorithms, and Time/Space Complexity (Big O) tailored for coding interviews and mid-terms.</div>
+      <div class="mat-meta"><span>📥 Web Book · 15 Chapters</span></div>
+      <a href="https://runestone.academy/ns/books/published/pythonds/index.html" target="_blank" class="mat-link">Access Book <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="gate">
+      <div class="mat-type">🧠 Advanced Notes</div>
+      <div class="mat-title">Modern Cryptography Fundamentals</div>
+      <div class="mat-desc">Exam-ready notes on public-key encryption, hash functions, and digital signatures. Essential for PG entrances and term papers.</div>
+      <div class="mat-meta"><span>📥 Web Resource</span></div>
+      <a href="https://toc.cryptobook.us/" target="_blank" class="mat-link">Read Online <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="networking gate">
+      <div class="mat-type">🛠️ Lab Manual</div>
+      <div class="mat-title">Cisco Packet Tracer Mastery Guide</div>
+      <div class="mat-desc">Step-by-step instructions for subnetting, FLSM, and OSPF configurations. Perfect for network topology assignments.</div>
+      <div class="mat-meta"><span>📥 Official PDF</span></div>
+      <a href="https://www.cisco.com/c/dam/en_us/training-events/netacad/course_catalog/docs/Cisco_PacketTracer_DS.pdf" target="_blank" class="mat-link">View Manual <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="upsc">
+      <div class="mat-type">📚 Subject Notes</div>
+      <div class="mat-title">Indian Polity & Constitution</div>
+      <div class="mat-desc">Comprehensive breakdown of fundamental rights, parliamentary structure, and historic acts for Prelims and Mains.</div>
+      <div class="mat-meta"><span>📥 Concept Hub</span></div>
+      <a href="https://ncert.nic.in/textbook.php" target="_blank" class="mat-link">Read Online <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="jeeneet">
+      <div class="mat-type">🔬 Core Science</div>
+      <div class="mat-title">University Physics & Mechanics</div>
+      <div class="mat-desc">In-depth open-source textbook detailing Kinematics, Dynamics, Thermodynamics, and Electromagnetism for high-level entrances.</div>
+      <div class="mat-meta"><span>📥 Web Textbook</span></div>
+      <a href="https://openstax.org/details/books/university-physics-volume-1" target="_blank" class="mat-link">Read OpenStax <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="management banking">
+      <div class="mat-type">🧮 Aptitude</div>
+      <div class="mat-title">Quantitative Aptitude Cheat Sheet</div>
+      <div class="mat-desc">Master the formulas and short-tricks for Time & Work, Speed & Distance, Percentages, and Geometry to maximize your speed.</div>
+      <div class="mat-meta"><span>📥 Practice Hub</span></div>
+      <a href="https://www.indiabix.com/aptitude/questions-and-answers/" target="_blank" class="mat-link">Access Formulas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="jeeneet">
+      <div class="mat-type">⚗️ Chemistry</div>
+      <div class="mat-title">Organic Chemistry Mechanisms</div>
+      <div class="mat-desc">A deep dive into named reactions, carbocations, and stereochemistry. Crucial for both NEET and JEE Advanced formats.</div>
+      <div class="mat-meta"><span>📥 Web Resource</span></div>
+      <a href="https://chem.libretexts.org/" target="_blank" class="mat-link">View Notes <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="empty-state">
+      <p>No study materials found for this specific path yet. Check back soon!</p>
+    </div>
+  </div>
+</section>
+
+<section id="pyq" class="subjects">
+  <div class="section-tag">🗂️ Archives</div>
+  <div class="section-title">Practice & Past Papers</div>
+  <div class="section-sub">The ultimate key to cracking exams. Practice with actual questions asked in previous years.</div>
+  
+  <div class="grid-layout" id="pyq-grid">
+    <div class="content-card mat-card filterable" data-exam="placement" style="background: var(--navy);">
+      <div class="mat-type">💻 Placement / FAANG</div>
+      <div class="mat-title">LeetCode Top 150 Interview Questions</div>
+      <div class="mat-desc">The ultimate beginner-to-advanced collection of coding questions asked at Google, Meta, and Amazon. Practice arrays, strings, and trees.</div>
+      <div class="mat-meta"><span>📥 Interactive Platform</span></div>
+      <a href="https://leetcode.com/studyplan/top-interview-150/" target="_blank" class="mat-link">Start Coding <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="networking" style="background: var(--navy);">
+      <div class="mat-type">🔌 Certification</div>
+      <div class="mat-title">CCNA 200-301 Practice Questions</div>
+      <div class="mat-desc">Test your knowledge on Network Fundamentals, IP Connectivity, and Security Fundamentals to prep for the Cisco exam.</div>
+      <div class="mat-meta"><span>📥 Official Portal</span></div>
+      <a href="https://learningnetwork.cisco.com/s/ccna-practice" target="_blank" class="mat-link">Take Quiz <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="gate" style="background: var(--navy);">
+      <div class="mat-type">🛤️ Masters Exam</div>
+      <div class="mat-title">GATE CS & IT Official PYQs</div>
+      <div class="mat-desc">Download official previous year GATE Computer Science papers directly from the organizing institute's archive.</div>
+      <div class="mat-meta"><span>📥 PDF Archive</span></div>
+      <a href="https://gate2024.iisc.ac.in/download-previous-years-question-papers/" target="_blank" class="mat-link">View Archive <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="upsc" style="background: var(--navy);">
+      <div class="mat-type">🏛️ Civil Services</div>
+      <div class="mat-title">UPSC CSE 10-Year Archive</div>
+      <div class="mat-desc">Official UPSC portal for General Studies Papers I & II and optional subjects. Analyze the changing pattern.</div>
+      <div class="mat-meta"><span>📥 PDF Portal</span></div>
+      <a href="https://upsc.gov.in/examinations/previous-question-papers" target="_blank" class="mat-link">Go to Portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="jeeneet" style="background: var(--navy);">
+      <div class="mat-type">🩺 Medical Entrance</div>
+      <div class="mat-title">NEET UG NTA Archives</div>
+      <div class="mat-desc">Access the official repository of the National Eligibility cum Entrance Test papers, direct from the NTA testing servers.</div>
+      <div class="mat-meta"><span>📥 Official NTA Site</span></div>
+      <a href="https://neet.nta.nic.in/" target="_blank" class="mat-link">Go to Portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="management" style="background: var(--navy);">
+      <div class="mat-type">📊 MBA Entrances</div>
+      <div class="mat-title">CAT Past Year Question Papers</div>
+      <div class="mat-desc">Review the structural changes in Data Interpretation, Logical Reasoning, and Verbal Ability directly via the IIM portals.</div>
+      <div class="mat-meta"><span>📥 IIM Archive</span></div>
+      <a href="https://iimcat.ac.in/" target="_blank" class="mat-link">Go to Portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="banking" style="background: var(--navy);">
+      <div class="mat-type">🏢 Govt Job Portal</div>
+      <div class="mat-title">SSC CGL Tier I & II Archives</div>
+      <div class="mat-desc">Familiarize yourself with the speed and accuracy required by practicing Staff Selection Commission past papers.</div>
+      <div class="mat-meta"><span>📥 SSC Official</span></div>
+      <a href="https://ssc.nic.in/" target="_blank" class="mat-link">Go to Portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    
+    <div class="empty-state">
+      <p>No practice papers found for this specific path yet.</p>
+    </div>
+  </div>
+</section>
+
+<section class="videos" id="videos">
+  <div class="section-tag">🎬 Video Lectures</div>
+  <div class="section-title">Expert Masterclasses</div>
+  <div class="section-sub">High-quality video lectures, tutorials, and crash courses.</div>
+  
+  <div class="grid-layout" id="video-grid">
+    <div class="content-card video-card filterable" data-exam="placement gate">
+      <div class="video-thumb">
+        <div class="thumb-icon">🐍</div>
+        <a href="https://www.youtube.com/watch?v=pkYVOmU3MgA" target="_blank" class="play-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#0a0f2c"><polygon points="5,3 19,12 5,21"/></svg>
+        </a>
+      </div>
+      <div class="video-body">
+        <div class="video-tag">Computer Science</div>
+        <div class="video-title">Python DSA for Beginners: Full Course</div>
+        <a href="https://www.youtube.com/watch?v=pkYVOmU3MgA" target="_blank" class="video-link-btn">▶ Watch on YouTube</a>
+      </div>
+    </div>
+
+    <div class="content-card video-card filterable" data-exam="networking gate">
+      <div class="video-thumb">
+        <div class="thumb-icon">🌐</div>
+        <a href="https://www.youtube.com/watch?v=cM3B-x8hR58" target="_blank" class="play-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#0a0f2c"><polygon points="5,3 19,12 5,21"/></svg>
+        </a>
+      </div>
+      <div class="video-body">
+        <div class="video-tag">IT Infrastructure</div>
+        <div class="video-title">OSPF Routing in Cisco Packet Tracer</div>
+        <a href="https://www.youtube.com/watch?v=cM3B-x8hR58" target="_blank" class="video-link-btn">▶ Watch on YouTube</a>
+      </div>
+    </div>
+
+    <div class="content-card video-card filterable" data-exam="upsc">
+      <div class="video-thumb">
+        <div class="thumb-icon">🏛️</div>
+        <a href="https://www.youtube.com/watch?v=swBSMKiNSDs" target="_blank" class="play-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#0a0f2c"><polygon points="5,3 19,12 5,21"/></svg>
+        </a>
+      </div>
+      <div class="video-body">
+        <div class="video-tag">History</div>
+        <div class="video-title">Indian Freedom Struggle — Full Revision</div>
+        <a href="https://www.youtube.com/watch?v=swBSMKiNSDs" target="_blank" class="video-link-btn">▶ Watch on YouTube</a>
+      </div>
+    </div>
+
+    <div class="content-card video-card filterable" data-exam="jeeneet gate">
+      <div class="video-thumb">
+        <div class="thumb-icon">📐</div>
+        <a href="https://www.youtube.com/watch?v=WUvTyaaNkzM" target="_blank" class="play-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#0a0f2c"><polygon points="5,3 19,12 5,21"/></svg>
+        </a>
+      </div>
+      <div class="video-body">
+        <div class="video-tag">Mathematics</div>
+        <div class="video-title">The Essence of Calculus (3Blue1Brown)</div>
+        <a href="https://www.youtube.com/watch?v=WUvTyaaNkzM" target="_blank" class="video-link-btn">▶ Watch on YouTube</a>
+      </div>
+    </div>
+
+    <div class="content-card video-card filterable" data-exam="management banking">
+      <div class="video-thumb">
+        <div class="thumb-icon">📈</div>
+        <a href="https://www.youtube.com/watch?v=t2CGE2rB21U" target="_blank" class="play-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#0a0f2c"><polygon points="5,3 19,12 5,21"/></svg>
+        </a>
+      </div>
+      <div class="video-body">
+        <div class="video-tag">Logical Reasoning</div>
+        <div class="video-title">Visualizing Data Interpretation</div>
+        <a href="https://www.youtube.com/watch?v=t2CGE2rB21U" target="_blank" class="video-link-btn">▶ Watch on YouTube</a>
+      </div>
+    </div>
+
+    <div class="empty-state">
+      <p>No video lectures found for this specific path yet.</p>
+    </div>
+  </div>
+</section>
+
+<section id="blogs">
+  <div class="section-tag">📰 Reading Room</div>
+  <div class="section-title">Deep-Dive Articles</div>
+  <div class="section-sub">Roadmaps, technical deep-dives, and strategy guides.</div>
+  
+  <div class="grid-layout" id="blog-grid">
+    <div class="content-card mat-card filterable" data-exam="placement">
+      <div class="mat-type">💻 Programming Guide</div>
+      <div class="mat-title">The LeetCode Beginner's Journey</div>
+      <div class="mat-desc">Starting your coding journey? Learn how to approach algorithms, understand time complexity, and tackle your first array problems in Python.</div>
+      <a href="https://leetcode.com/explore/learn/card/the-leetcode-beginners-guide/" target="_blank" class="mat-link">Read Guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="networking">
+      <div class="mat-type">🌐 Networking Basics</div>
+      <div class="mat-title">Demystifying Network Topologies</div>
+      <div class="mat-desc">A deep dive into Bus, Star, Ring, and Mesh networks. Understand the pros, cons, and real-world use cases of each architecture.</div>
+      <a href="https://www.geeksforgeeks.org/types-of-network-topology/" target="_blank" class="mat-link">Read Article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="gate placement">
+      <div class="mat-type">🛡️ Cybersecurity</div>
+      <div class="mat-title">Cryptography and its Types</div>
+      <div class="mat-desc">An excellent overview of symmetric and asymmetric encryption. Perfect for forming the basis of your next CS term paper or interview prep.</div>
+      <a href="https://www.geeksforgeeks.org/cryptography-and-its-types/" target="_blank" class="mat-link">Read Article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="upsc">
+      <div class="mat-type">📰 Strategy</div>
+      <div class="mat-title">How to Read The Hindu for UPSC</div>
+      <div class="mat-desc">Stop reading cover to cover. Learn the exact framework toppers use to filter current affairs efficiently.</div>
+      <a href="https://www.drishtiias.com/upsc-exam-gs-resources-How-to-Read-a-Newspaper" target="_blank" class="mat-link">Read Strategy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="jeeneet">
+      <div class="mat-type">🧠 Exam Psychology</div>
+      <div class="mat-title">Medical Prep: Overcoming Burnout</div>
+      <div class="mat-desc">Scientific methods published via the NIH on combating study fatigue and maintaining focus during 12-hour study grinds.</div>
+      <a href="https://www.ncbi.nlm.nih.gov/" target="_blank" class="mat-link">Read Research <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="management">
+      <div class="mat-type">💼 Interview Prep</div>
+      <div class="mat-title">Acing the IIM Personal Interview</div>
+      <div class="mat-desc">Read expert insights from the Harvard Business Review on communicating leadership, handling stress questions, and projecting confidence.</div>
+      <a href="https://hbr.org/" target="_blank" class="mat-link">Read Article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="content-card mat-card filterable" data-exam="banking">
+      <div class="mat-type">⏳ Time Management</div>
+      <div class="mat-title">Speed Math Techniques for SSC/Banking</div>
+      <div class="mat-desc">Vedic mathematics and mental calculation tricks that can cut your quantitative aptitude solving time in half.</div>
+      <a href="https://en.wikipedia.org/wiki/Mental_calculation" target="_blank" class="mat-link">Read Techniques <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    
+    <div class="empty-state">
+      <p>No articles found for this specific path yet.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <div class="logo">Prep<span>Exam</span> Academy</div>
+    <p>Your dynamic platform for tech, engineering, management, and civil service exam preparation. Content that adapts to your path.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Core Focus Areas</h4>
+    <ul>
+      <li><a href="#" onclick="document.querySelector('.tab-btn:nth-child(2)').click(); return false;">Software Engineering / FAANG</a></li>
+      <li><a href="#" onclick="document.querySelector('.tab-btn:nth-child(4)').click(); return false;">GATE / Computer Science</a></li>
+      <li><a href="#" onclick="document.querySelector('.tab-btn:nth-child(6)').click(); return false;">Medical / Engineering (NEET/JEE)</a></li>
+      <li><a href="#" onclick="document.querySelector('.tab-btn:nth-child(7)').click(); return false;">Management (CAT/GMAT)</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Official Portals</h4>
+    <ul>
+      <li><a href="https://leetcode.com" target="_blank">LeetCode Official</a></li>
+      <li><a href="https://neet.nta.nic.in/" target="_blank">NTA NEET Portal</a></li>
+      <li><a href="https://gate2024.iisc.ac.in/" target="_blank">GATE Portal</a></li>
+      <li><a href="https://upsc.gov.in/" target="_blank">UPSC Portal</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">© 2026 PrepExam Academy · Adaptive Ecosystem Powered by Data</div>
+
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // --- THE MASTER FILTERING FUNCTION ---
+  function filterEcosystem(category, btn) {
+    // 1. Update active button styling
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // 2. Filter all content cards across the whole page
+    const allCards = document.querySelectorAll('.filterable');
+    allCards.forEach(card => {
+      const cardCategories = card.dataset.exam || "";
+      
+      // Split the categories to allow multiple paths per card
+      const categoryArray = cardCategories.split(' ');
+      
+      if (category === 'all' || categoryArray.includes(category)) {
+        card.style.display = 'flex';
+        // Quick trick to re-trigger CSS animations
+        card.style.animation = 'none';
+        card.offsetHeight; /* trigger reflow */
+        card.style.animation = null; 
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // 3. Check for empty states in each grid section
+    const grids = ['material-grid', 'pyq-grid', 'video-grid', 'blog-grid'];
+    grids.forEach(gridId => {
+      const grid = document.getElementById(gridId);
+      if (grid) {
+        // Count how many cards are currently visible in this grid
+        const visibleCards = Array.from(grid.querySelectorAll('.filterable')).filter(card => card.style.display !== 'none');
+        const emptyState = grid.querySelector('.empty-state');
+        
+        if (visibleCards.length === 0) {
+          emptyState.style.display = 'block';
+        } else {
+          emptyState.style.display = 'none';
+        }
+      }
+    });
+  }
+
+  // Fade-in on scroll animation (keeps the site feeling premium)
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { 
+        e.target.style.opacity = 1; 
+        e.target.style.transform = 'translateY(0)'; 
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.content-card').forEach(el => {
+    el.style.cssText += 'opacity:0;transform:translateY(20px); transition: opacity .5s ease, transform .5s ease, box-shadow .25s, border-color .25s;';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
