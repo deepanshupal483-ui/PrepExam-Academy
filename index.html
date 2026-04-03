@@ -61,13 +61,13 @@
   }
   .nav-cta:hover { background: var(--amber); transform: translateY(-1px); }
 
-  /* ── HERO ── */
+  /* ── HERO & SEARCH BAR ── */
   .hero {
     min-height: 90vh;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center;
-    padding: 120px 6vw 60px;
+    padding: 140px 6vw 60px;
     position: relative; overflow: hidden;
   }
   .hero::before {
@@ -92,26 +92,59 @@
     max-width: 600px; line-height: 1.7;
     animation: fadeUp .8s .2s ease both;
   }
+  
+  /* NEW: Search Bar Styles */
+  .hero-search {
+    margin-top: 35px; display: flex; gap: 10px; max-width: 650px; width: 100%;
+    animation: fadeUp .8s .3s ease both; position: relative; z-index: 5;
+  }
+  .hero-search input {
+    flex: 1; padding: 18px 24px; border-radius: 50px; border: 1px solid var(--border);
+    background: rgba(22, 29, 66, 0.7); color: var(--cream); font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem; outline: none; transition: border-color 0.2s, background 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  .hero-search input::placeholder { color: var(--muted); }
+  .hero-search input:focus { border-color: var(--gold); background: var(--card); }
+  .hero-search button {
+    padding: 18px 36px; border-radius: 50px; background: var(--gold); color: var(--navy);
+    border: none; font-weight: 700; font-size: 1.05rem; cursor: pointer;
+    transition: transform 0.2s, background 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .hero-search button:hover { background: var(--amber); transform: translateY(-2px); }
+
+  /* NEW: Search Results Section */
+  #search-results-section {
+    display: none; padding: 60px 6vw; background: var(--deep); border-top: 1px solid var(--border);
+  }
+  .search-card {
+    background: var(--card); border: 1px solid var(--gold); border-radius: var(--radius);
+    padding: 28px; cursor: pointer; transition: transform .25s, box-shadow .25s; position: relative;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .search-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(245,200,66,0.15); }
+  .course-start-wrapper {
+    margin-top: auto; padding-top: 16px; overflow: hidden; height: 0; opacity: 0; transition: height 0.3s ease, opacity 0.3s ease;
+  }
+  .course-start-wrapper.active { height: 45px; opacity: 1; }
+  .course-start-btn {
+    display: block; width: 100%; padding: 12px 0; background: var(--gold); color: var(--navy);
+    border-radius: 8px; font-weight: 700; text-align: center; text-decoration: none; transition: background 0.2s;
+  }
+  .course-start-btn:hover { background: var(--amber); }
 
   /* ── GLOBAL FILTER MENU ── */
   .global-filter {
-    background: var(--deep);
-    padding: 40px 6vw;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    z-index: 10;
+    background: var(--deep); padding: 40px 6vw;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    position: relative; z-index: 10;
   }
   .global-filter h2 {
-    text-align: center;
-    font-family: 'Playfair Display', serif;
-    color: var(--cream);
-    margin-bottom: 24px;
-    font-size: 1.8rem;
+    text-align: center; font-family: 'Playfair Display', serif; color: var(--cream);
+    margin-bottom: 24px; font-size: 1.8rem;
   }
   .exam-tabs {
-    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-    max-width: 1000px; margin: 0 auto;
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; max-width: 1000px; margin: 0 auto;
   }
   .tab-btn {
     padding: 12px 22px; border-radius: 50px; border: 1.5px solid var(--border);
@@ -122,31 +155,15 @@
 
   /* ── SECTIONS ── */
   section { padding: 80px 6vw; }
-  .section-tag {
-    font-size: 0.75rem; font-weight: 700;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 12px;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.9rem, 4vw, 2.8rem);
-    font-weight: 900; line-height: 1.15; color: var(--cream);
-  }
-  .section-sub {
-    margin-top: 14px; color: var(--muted);
-    font-size: 1rem; line-height: 1.7; max-width: 540px; margin-bottom: 40px;
-  }
+  .section-tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.15; color: var(--cream); }
+  .section-sub { margin-top: 14px; color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 540px; margin-bottom: 40px; }
 
   /* ── GRIDS ── */
-  .grid-layout {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;
-  }
+  .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
   .content-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 28px;
-    display: flex; flex-direction: column; gap: 12px;
-    transition: transform .25s, box-shadow .25s, opacity 0.3s ease;
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px;
+    display: flex; flex-direction: column; gap: 12px; transition: transform .25s, box-shadow .25s, opacity 0.3s ease;
   }
   .content-card:hover { transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,0.35); }
   
@@ -155,8 +172,7 @@
   .mat-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
   .mat-meta { display: flex; gap: 16px; font-size: 0.78rem; color: var(--muted); margin-top: auto; padding-top: 10px;}
   .mat-link {
-    margin-top: 14px; display: inline-flex; align-items: center; gap: 8px;
-    color: var(--gold); font-weight: 600; font-size: 0.88rem;
+    margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; color: var(--gold); font-weight: 600; font-size: 0.88rem;
     text-decoration: none; cursor: pointer; transition: gap .2s; border: none; background: none; padding: 0;
   }
   .mat-link:hover { gap: 12px; }
@@ -218,6 +234,7 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
   
   @media(max-width: 900px) { nav ul { display: none; } }
+  @media(max-width: 640px) { .hero-search { flex-direction: column; } }
 </style>
 </head>
 <body>
@@ -237,8 +254,20 @@
 <div class="hero">
   <div class="hero-badge">🚀 Personalized Learning Ecosystem</div>
   <h1>Your Blueprint for <em>Career Success</em></h1>
-  <p>Select your target path below. We instantly filter the world's best study material, previous year papers, and video lectures to match your exact goals.</p>
+  <p>Select your target path below, or use the search engine to instantly find the world's best study material, video lectures, and practice exams.</p>
+  
+  <form class="hero-search" onsubmit="handleSearch(event)">
+    <input type="text" id="course-search-input" placeholder="Search courses (e.g., Python, Networking, UPSC)..." autocomplete="off" required />
+    <button type="submit">Search Courses</button>
+  </form>
 </div>
+
+<section id="search-results-section">
+  <div class="section-tag" style="text-align: center;">🔎 Search Results</div>
+  <div class="section-title" id="search-title" style="text-align: center; margin-bottom: 40px;">Available Courses</div>
+  <div class="grid-layout" id="search-results-grid">
+    </div>
+</section>
 
 <section class="global-filter" id="dashboard">
   <h2>Select Your Target Path</h2>
@@ -562,37 +591,110 @@
 <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
+  // --- INTERNAL COURSE DATABASE FOR SEARCH ENGINE ---
+  const courseDatabase = [
+    { title: "Python DSA for Beginners: Full Course", desc: "Master arrays, linked lists, and sorting in Python. High-quality video lecture.", category: "Programming", link: "https://www.youtube.com/watch?v=pkYVOmU3MgA", type: "Video Course", icon: "🎬" },
+    { title: "Data Structures & Algorithms in Python", desc: "Complete reference textbook covering Time/Space Complexity (Big O).", category: "Notes", link: "https://runestone.academy/ns/books/published/pythonds/index.html", type: "Interactive Book", icon: "📝" },
+    { title: "OSPF Routing in Cisco Packet Tracer", desc: "Step-by-step video guide to configuring OSPF and FLSM in Packet Tracer.", category: "Networking", link: "https://www.youtube.com/watch?v=cM3B-x8hR58", type: "Video Lab", icon: "🔌" },
+    { title: "Demystifying Network Topologies", desc: "A deep dive into Bus, Star, Ring, and Mesh networks and their real-world uses.", category: "Networking", link: "https://www.geeksforgeeks.org/types-of-network-topology/", type: "Article", icon: "🌐" },
+    { title: "Modern Cryptography Fundamentals", desc: "Public-key encryption, hash functions, and digital signatures for IT students.", category: "Security", link: "https://toc.cryptobook.us/", type: "Advanced Notes", icon: "🛡️" },
+    { title: "LeetCode Top 150 Interview Questions", desc: "The ultimate beginner-to-advanced collection of coding questions.", category: "Practice", link: "https://leetcode.com/studyplan/top-interview-150/", type: "Interactive", icon: "💻" },
+    { title: "Indian Polity & Constitution", desc: "Comprehensive breakdown of fundamental rights and parliamentary structure.", category: "UPSC", link: "https://ncert.nic.in/textbook.php", type: "Notes", icon: "🏛️" },
+    { title: "Quantitative Aptitude Cheat Sheet", desc: "Master formulas for Time & Work, Speed & Distance, Percentages, and Geometry.", category: "Math", link: "https://www.indiabix.com/aptitude/questions-and-answers/", type: "Cheat Sheet", icon: "🧮" },
+    { title: "The Essence of Calculus", desc: "Visualizing the core concepts of mathematics for JEE and GATE prep.", category: "Math", link: "https://www.youtube.com/watch?v=WUvTyaaNkzM", type: "Video Course", icon: "📐" },
+    { title: "Organic Chemistry Mechanisms", desc: "Named reactions, carbocations, and stereochemistry for NEET and JEE.", category: "Science", link: "https://chem.libretexts.org/", type: "Web Resource", icon: "⚗️" }
+  ];
+
+  // --- SEARCH ENGINE LOGIC ---
+  function handleSearch(e) {
+    e.preventDefault();
+    const query = document.getElementById('course-search-input').value.toLowerCase().trim();
+    const resultsSection = document.getElementById('search-results-section');
+    const resultsGrid = document.getElementById('search-results-grid');
+    const title = document.getElementById('search-title');
+
+    resultsGrid.innerHTML = ''; // Clear previous
+
+    if (!query) {
+      resultsSection.style.display = 'none';
+      return;
+    }
+
+    // Filter database
+    const results = courseDatabase.filter(course => 
+      course.title.toLowerCase().includes(query) || 
+      course.desc.toLowerCase().includes(query) || 
+      course.category.toLowerCase().includes(query)
+    );
+
+    resultsSection.style.display = 'block';
+    title.textContent = `Search Results for "${query}"`;
+
+    if (results.length > 0) {
+      results.forEach((course, index) => {
+        // Create Card
+        const cardHTML = `
+          <div class="search-card" onclick="toggleStartCourse('start-course-${index}')">
+            <div class="mat-type">${course.icon} ${course.type} | ${course.category}</div>
+            <div class="mat-title">${course.title}</div>
+            <div class="mat-desc">${course.desc}</div>
+            <div class="course-start-wrapper" id="start-course-${index}">
+              <a href="${course.link}" target="_blank" class="course-start-btn">▶ Start Course</a>
+            </div>
+          </div>
+        `;
+        resultsGrid.innerHTML += cardHTML;
+      });
+    } else {
+      resultsGrid.innerHTML = `
+        <div class="empty-state" style="display:block; grid-column: 1/-1;">
+          <p>No courses found for "<strong>${query}</strong>". Try searching for Python, Networking, Math, or UPSC.</p>
+        </div>
+      `;
+    }
+    
+    // Smooth scroll to results
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // --- TOGGLE START COURSE BUTTON ---
+  function toggleStartCourse(wrapperId) {
+    const wrapper = document.getElementById(wrapperId);
+    
+    // Toggle class for CSS transition
+    if (wrapper.classList.contains('active')) {
+       wrapper.classList.remove('active');
+    } else {
+       // Optional: Close others first
+       document.querySelectorAll('.course-start-wrapper').forEach(el => el.classList.remove('active'));
+       wrapper.classList.add('active');
+    }
+  }
+
   // --- THE MASTER FILTERING FUNCTION ---
   function filterEcosystem(category, btn) {
-    // 1. Update active button styling
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    // 2. Filter all content cards across the whole page
     const allCards = document.querySelectorAll('.filterable');
     allCards.forEach(card => {
       const cardCategories = card.dataset.exam || "";
-      
-      // Split the categories to allow multiple paths per card
       const categoryArray = cardCategories.split(' ');
       
       if (category === 'all' || categoryArray.includes(category)) {
         card.style.display = 'flex';
-        // Quick trick to re-trigger CSS animations
         card.style.animation = 'none';
-        card.offsetHeight; /* trigger reflow */
+        card.offsetHeight; 
         card.style.animation = null; 
       } else {
         card.style.display = 'none';
       }
     });
 
-    // 3. Check for empty states in each grid section
     const grids = ['material-grid', 'pyq-grid', 'video-grid', 'blog-grid'];
     grids.forEach(gridId => {
       const grid = document.getElementById(gridId);
       if (grid) {
-        // Count how many cards are currently visible in this grid
         const visibleCards = Array.from(grid.querySelectorAll('.filterable')).filter(card => card.style.display !== 'none');
         const emptyState = grid.querySelector('.empty-state');
         
@@ -605,7 +707,7 @@
     });
   }
 
-  // Fade-in on scroll animation (keeps the site feeling premium)
+  // Fade-in on scroll animation
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { 
